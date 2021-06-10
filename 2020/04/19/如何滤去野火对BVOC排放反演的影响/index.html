@@ -1,0 +1,108 @@
+<html>
+<head>
+	
+	<title>如何滤去野火对BVOC排放反演的影响</title>
+	<meta name="keywords" content="" />
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+	   <link href="/css/main.css?v=3" rel="stylesheet" type="text/css" />
+        
+<script src="/js/util.js"></script>
+
+        <script>
+            if(isMobile()) {
+                loadjscssfile('../../../../css/mobile.css', 'css');
+            } else {
+                loadjscssfile('../../../../css/desktop.css', 'css');
+            }
+        </script> 
+    
+
+    <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">
+
+    
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.png?v=3"/>
+    
+    
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+
+
+
+
+<h2 class="title">如何滤去野火对BVOC排放反演的影响</h2>
+<div style="margin-top: -10px;">
+        
+
+<script src="/js/util.js"></script>
+
+<script>
+    if(isMobile()) {
+        loadjscssfile('../../../../css/mobile.css', 'css');
+    } else {
+        loadjscssfile('../../../../css/desktop.css', 'css');
+    }
+</script> 
+
+
+<p>三种方法,各有优缺点。</p>
+<ol>
+<li><p>跑一组敏感性实验，用有野火的模式结果减去没有野火的模式结果,得到野火的影响。</p>
+<p> 操作很方便，但是不合理，因为为野火的影响是非线性的。对2019年，相减后得到的仅由野火导致的HCHO VCD plume如下所示：</p>
+</li>
+</ol>
+<p><img src="image-20200419115418431.png" alt="GC Wildfire"></p>
+<p>可见2019年7月，野火导致在阿拉斯加中部很强的东西向延展的成片HCHO VCD信号，和TROPOMI同时观测到的HCHO VCD 空间分布很接近。这也佐证了TROPOMI在19年7月在Alaska中部的HCHOVCD有很强的野火贡献。</p>
+<p><img src="image-20200419115852210.png" alt="TROPOMI origin and minuswildfire"></p>
+<p>用TROPOMI的HCHOVCD场，减去野火影响下的HCHO VCD场，得到滤去野火影响后的HCHO VCD场。过滤后19年6月Alaska中部的HCHO VCD峰值几乎都被消除了，7月的中部峰值也被削弱了很多，但还保留了原来的结构。这说明19年夏天，野火主要影响7月的HCHO VCD。但Alaska夏季的HCHO VCD pattern仍然是由植物排放VOC占主导的。</p>
+<ol start="2">
+<li><p>用一氧化碳柱浓度作为野火的指标。</p>
+<p> 实际效果不好，滤不干净。但可以和1做对比相互验证。2019年夏季，TROPOMI的CO VCD场如下所示：</p>
+<p> <img src="TPM_COVCD_SupHiR_AK_1907.png" alt="TPM_COVCD_SupHiR_AK_1907"></p>
+<p> 可见CO VCD仅在7月出现明显超过背景值的pattern。这和1中提取的野火导致的HCHO VCD 空间分布非常相似。使用2x10^18 moles/cm^2作为筛选标准，滤除高于这个标准的数据点。得到的HCHO VCD场，空间结构没有明显变化，仅峰值强度被削弱。这与1得到的结论也是吻合的。</p>
+</li>
+<li><p>用大气光学厚度作为指标。</p>
+<p> 但是TROPOMI没有观测这个。用第三方数据会引入其他系统误差。还没有试过，无法评价。</p>
+</li>
+</ol>
+<p>总之，使用模式敏感性实验作差来滤除野火导致的影响，和用CO VCD作为标准来滤除野火影响的数据点，效果差不多，都得到了类似的结论：19年野火主要影响到7月Alaska中部的HCHO VCD, 但不影响Alaska的HCHO VCD 空间pattern，仅对峰值强度有影响。该pattern由陆地植物排放VOC主导。</p>
+
+</div>
+
+<div style="display:none">
+<script src="http://s4.cnzz.com/stat.php?id=&web_id=" language="JavaScript"></script>script>
+</div>
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = http://www.androidperformance.com/;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://rumzhao.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+
+
+
+
+
+</body>
+</html>
