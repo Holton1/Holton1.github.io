@@ -50,16 +50,7 @@
 </script> 
 
 <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Download-GEOS-Chem-source-code"><span class="toc-text">Download GEOS-Chem source code</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Create-run-directory"><span class="toc-text">Create run directory</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Modify-source-code-on-a-Git-branch"><span class="toc-text">Modify source code on a Git branch</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Compile"><span class="toc-text">Compile</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Submit-mission"><span class="toc-text">Submit mission</span></a></li></ol>
-<p>This article introduces how to run a nested grid simulation using GEOS-Chem v12.5.0, through 6 steps:</p>
-<ol>
-<li>Download GEOS-Chem source code</li>
-<li>create run directory</li>
-<li>Configuration</li>
-<li>Modify source code on a Git branch</li>
-<li>compile</li>
-<li>submit mission</li>
-</ol>
-<p>Here let’s go.</p>
+<p>This article introduces how to run a nested grid simulation using GEOS-Chem v12.5.0, through 6 steps. Here let’s go.</p>
 <h1 id="Download-GEOS-Chem-source-code"><a href="#Download-GEOS-Chem-source-code" class="headerlink" title="Download GEOS-Chem source code"></a>Download GEOS-Chem source code</h1><p>GEOS-Chem v12.5.0 (<strong><a target="_blank" rel="noopener" href="https://doi.org/10.5281/zenodo.3403111">DOI: 10.5281/zenodo.3403111</a></strong>) was released on 09 Sep 2019. You can use the following Git commands to download the GEOS-Chem 12.5.0 source code and <a target="_blank" rel="noopener" href="http://wiki.seas.harvard.edu/geos-chem/index.php/GEOS-Chem_Unit_Tester">GEOS-Chem Unit Tester</a> package.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># Download the GEOS-Chem source code</span><br><span class="line">git clone https://github.com/geoschem/geos-chem Code.12.5.0</span><br><span class="line">cd Code.12.5.0</span><br><span class="line"></span><br><span class="line"># Create and checkout a new branch &quot;GC_12.5.0&quot; at the tag &quot;12.5.0&quot;</span><br><span class="line">git checkout -b GC_12.5.0 12.5.0</span><br><span class="line">cd .. </span><br><span class="line"></span><br><span class="line"># Download the GEOS-Chem Unit Tester, from which run directories can be generated</span><br><span class="line">git clone https://github.com/geoschem/geos-chem-unittest UT</span><br><span class="line">cd UT</span><br><span class="line"></span><br><span class="line"># Create and checkout a new branch &quot;GC_12.5.0&quot; at the tag &quot;12.5.0&quot;</span><br><span class="line">git checkout -b GC_12.5.0 12.5.0</span><br></pre></td></tr></table></figure>
 
@@ -90,7 +81,7 @@
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make -j4 NEST=yes DEBUG=yes mpbuild</span><br></pre></td></tr></table></figure>
 
 <p>Wait until compilation is finished, if successfully compiled, should see the text like:</p>
-<p><img src="Run-GEOS-Chem-v12-5-0-nested-simulation/image-20220206055022211.png" alt="image-20220206055022211"></p>
+<p><img src="image-20220206055022211.png" alt="image-20220206055022211"></p>
 <h1 id="Submit-mission"><a href="#Submit-mission" class="headerlink" title="Submit mission"></a>Submit mission</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbatch xxx.sh</span><br></pre></td></tr></table></figure>
 
 <p>Wait for the results!</p>
