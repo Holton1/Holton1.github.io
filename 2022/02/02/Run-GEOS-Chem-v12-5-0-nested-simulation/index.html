@@ -1,0 +1,131 @@
+<html>
+<head>
+	
+	<title>Run GEOS-Chem v12.5.0 nested simulation</title>
+	<meta name="keywords" content="" />
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+	   <link href="../../../../css/main.css?v=3" rel="stylesheet" type="text/css" />
+        
+<script src="../../../../js/util.js"></script>
+
+        <script>
+            if(isMobile()) {
+                loadjscssfile('../../../../css/mobile.css', 'css');
+            } else {
+                loadjscssfile('../../../../css/desktop.css', 'css');
+            }
+        </script> 
+    
+
+    <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">
+
+    
+	<link rel="shortcut icon" type="image/x-icon" href="../../../../favicon.png?v=3"/>
+    
+    
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+
+
+
+
+<h2 class="title">Run GEOS-Chem v12.5.0 nested simulation</h2>
+<div style="margin-top: -10px;">
+        
+
+<script src="../../../../js/util.js"></script>
+
+<script>
+    if(isMobile()) {
+        loadjscssfile('../../../../css/mobile.css', 'css');
+    } else {
+        loadjscssfile('../../../../css/desktop.css', 'css');
+    }
+</script> 
+
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Download-GEOS-Chem-source-code"><span class="toc-text">Download GEOS-Chem source code</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Create-run-directory"><span class="toc-text">Create run directory</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Modify-source-code-on-a-Git-branch"><span class="toc-text">Modify source code on a Git branch</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Compile"><span class="toc-text">Compile</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Submit-mission"><span class="toc-text">Submit mission</span></a></li></ol>
+<p>This article introduces how to run a nested grid simulation using GEOS-Chem v12.5.0, through 6 steps:</p>
+<ol>
+<li>Download GEOS-Chem source code</li>
+<li>create run directory</li>
+<li>Configuration</li>
+<li>Modify source code on a Git branch</li>
+<li>compile</li>
+<li>submit mission</li>
+</ol>
+<p>Here let’s go.</p>
+<h1 id="Download-GEOS-Chem-source-code"><a href="#Download-GEOS-Chem-source-code" class="headerlink" title="Download GEOS-Chem source code"></a>Download GEOS-Chem source code</h1><p>GEOS-Chem v12.5.0 (<strong><a target="_blank" rel="noopener" href="https://doi.org/10.5281/zenodo.3403111">DOI: 10.5281/zenodo.3403111</a></strong>) was released on 09 Sep 2019. You can use the following Git commands to download the GEOS-Chem 12.5.0 source code and <a target="_blank" rel="noopener" href="http://wiki.seas.harvard.edu/geos-chem/index.php/GEOS-Chem_Unit_Tester">GEOS-Chem Unit Tester</a> package.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># Download the GEOS-Chem source code</span><br><span class="line">git clone https://github.com/geoschem/geos-chem Code.12.5.0</span><br><span class="line">cd Code.12.5.0</span><br><span class="line"></span><br><span class="line"># Create and checkout a new branch &quot;GC_12.5.0&quot; at the tag &quot;12.5.0&quot;</span><br><span class="line">git checkout -b GC_12.5.0 12.5.0</span><br><span class="line">cd .. </span><br><span class="line"></span><br><span class="line"># Download the GEOS-Chem Unit Tester, from which run directories can be generated</span><br><span class="line">git clone https://github.com/geoschem/geos-chem-unittest UT</span><br><span class="line">cd UT</span><br><span class="line"></span><br><span class="line"># Create and checkout a new branch &quot;GC_12.5.0&quot; at the tag &quot;12.5.0&quot;</span><br><span class="line">git checkout -b GC_12.5.0 12.5.0</span><br></pre></td></tr></table></figure>
+
+<p>Finishing the process above, you should be in UT like:</p>
+<p>In the next step we create a run directory of our simulation.</p>
+<h1 id="Create-run-directory"><a href="#Create-run-directory" class="headerlink" title="Create run directory"></a>Create run directory</h1><p>Run directory is a folder that keeps configuration files like input.geos, HEMCO_Config.rc etc, the executable file of the model (geos), and also, the model output after simulation is done. </p>
+<h1 id="Modify-source-code-on-a-Git-branch"><a href="#Modify-source-code-on-a-Git-branch" class="headerlink" title="Modify source code on a Git branch"></a>Modify source code on a Git branch</h1><p>Go to the CodeDir, a softlink of the source code directory. </p>
+<p>We firsr need to know which branch the source code currently is:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git branch</span></span><br></pre></td></tr></table></figure>
+
+<p>Say the branch is “mod_1”, and we want to switch to the basic branch, we first look at the version history</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git reflog</span></span><br></pre></td></tr></table></figure>
+
+<p>we can see the head of branchs we used before, like this:</p>
+<p>Find the head of the branch we need, then:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git reset --hard HEAD^</span></span><br></pre></td></tr></table></figure>
+
+<p>Now we have go back to basic branch now and the code are original. If needed, we could create a new branch, say “mod_2”:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git checkout -b mod_2</span></span><br></pre></td></tr></table></figure>
+
+<p>This step can be skipped. We can start to modify the code as we need. Finish modification, leave a commit to save it:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add .</span> </span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">&quot;Description of what I modified&quot;</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin mod_2</span></span><br></pre></td></tr></table></figure>
+
+<p>No worries about overwritting the HEAD^ we stoppe by. Now modification is done and saved to a new HEAD^. Next time we need to use this code version, we can just simply switch to this branch again.</p>
+<h1 id="Compile"><a href="#Compile" class="headerlink" title="Compile"></a>Compile</h1><p>The compilation is done by Makefile. We first clean the previous compilation files to make sure nothing goes wrong. Go to the <strong>run directory</strong> and do:</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make realclean</span><br></pre></td></tr></table></figure>
+<p>Then compile. Make sure nest and debug are turned on.</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make -j4 NEST=yes DEBUG=yes mpbuild</span><br></pre></td></tr></table></figure>
+
+<p>Wait until compilation is finished, if successfully compiled, should see the text like:</p>
+<p><img src="Run-GEOS-Chem-v12-5-0-nested-simulation/image-20220206055022211.png" alt="image-20220206055022211"></p>
+<h1 id="Submit-mission"><a href="#Submit-mission" class="headerlink" title="Submit mission"></a>Submit mission</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbatch xxx.sh</span><br></pre></td></tr></table></figure>
+
+<p>Wait for the results!</p>
+
+</div>
+
+<div style="display:none">
+<script src="http://s4.cnzz.com/stat.php?id=&web_id=" language="JavaScript"></script>script>
+</div>
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = http://www.androidperformance.com/;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://rumzhao.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+
+
+
+
+
+</body>
+</html>
