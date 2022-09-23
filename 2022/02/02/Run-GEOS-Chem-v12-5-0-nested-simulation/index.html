@@ -64,7 +64,10 @@
 <p>Say the branch is “mod_1”, and we want to switch to the basic branch, we first look at the version history</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git reflog</span></span><br></pre></td></tr></table></figure>
 
-<p>we can see the head of branchs we used before, like this:</p>
+<p>we can see the head of branchs we used before. Also we can use:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">log</span> --oneline</span><br></pre></td></tr></table></figure>
+
+<p>to see the head and modifications.</p>
 <p>Find the head of the branch we need, then:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git reset --hard HEAD^</span></span><br></pre></td></tr></table></figure>
 
